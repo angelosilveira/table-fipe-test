@@ -2,15 +2,15 @@
 
 import React from "react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 
 import { Wrapper } from "@/components";
 import { RootState } from "@/store/store";
 
 import * as S from "./styles";
+import { useAppSelector } from "@/hooks/useAppRedux";
 
 export default function Result() {
-  const car = useSelector((state: RootState) => state.cars.carFipe);
+  const car = useAppSelector((state: RootState) => state.cars.carFipe);
   console.log("🚀 ~ Result ~ car:", car);
 
   return (
