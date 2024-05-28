@@ -10,7 +10,7 @@ export default async function getYearBrandCars({
   modelCode,
 }: Props): Promise<Brand[]> {
   const response = await fetch(
-    `https://parallelum.com.br/fipe/api/v1/carros/marcas/${brandCode}/modelos/${modelCode}/anos`
+    `${process.env.NEXT_PUBLIC_API_URL}/marcas/${brandCode}/modelos/${modelCode}/anos`
   )
     .then((response) => response.json())
     .catch((error) => console.log(error));

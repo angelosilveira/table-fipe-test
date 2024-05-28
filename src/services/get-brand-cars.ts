@@ -1,9 +1,7 @@
 import { Brand } from "@/intefaces/Brand";
 
 export default async function getBrandCars(): Promise<Brand[]> {
-  const response = await fetch(
-    `https://parallelum.com.br/fipe/api/v1/carros/marcas`
-  )
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/marcas`)
     .then((response) => response.json())
     .catch((error) => console.log(error));
 
