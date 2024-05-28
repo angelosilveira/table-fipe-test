@@ -1,13 +1,13 @@
 "use client";
 
+import React, { useEffect } from "react";
+import { redirect } from "next/navigation";
 import { useSelector } from "react-redux";
 
 import { Wrapper } from "@/components";
 import { RootState } from "@/store/store";
 
 import * as S from "./styles";
-import { useEffect } from "react";
-import { redirect } from "next/navigation";
 
 export default function Result() {
   const car = useSelector((state: RootState) => state.cars.carFipe);
