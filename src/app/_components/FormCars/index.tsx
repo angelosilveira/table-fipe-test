@@ -64,6 +64,7 @@ export const FormCars = ({ brands }: Props) => {
   const dispatch = useAppDispatch();
 
   const modelsListMemo = useMemo(() => {
+    if (!modelsList.modelos) return [];
     const newArrayModelsList = modelsList.modelos.map((model) => ({
       label: model.nome,
       code: String(model.codigo),
