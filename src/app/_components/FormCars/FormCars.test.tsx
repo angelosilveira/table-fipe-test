@@ -1,10 +1,10 @@
 // FormCars.test.tsx
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { FormCars } from "./";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Wrapper } from "@/components";
-import { renderWithProviders } from "@/utils/utils-for-tests";
+import { CarsProvider } from "@/context/carsContext";
 
 const customTheme = createTheme({
   bgColor: {
@@ -22,11 +22,13 @@ jest.mock("next/navigation", () => ({
 }));
 
 const WrapperWithTheme = ({ children }: { children: React.ReactNode }) => (
-  <ThemeProvider theme={customTheme}>
-    <Wrapper sx={{ backgroundColor: (theme) => theme.bgColor.main }}>
-      {children}
-    </Wrapper>
-  </ThemeProvider>
+  <CarsProvider>
+    <ThemeProvider theme={customTheme}>
+      <Wrapper sx={{ backgroundColor: (theme) => theme.bgColor.main }}>
+        {children}
+      </Wrapper>
+    </ThemeProvider>
+  </CarsProvider>
 );
 
 const brands = [
@@ -36,7 +38,7 @@ const brands = [
 
 describe("FormCars Component", () => {
   it("renders without crashing", () => {
-    renderWithProviders(
+    render(
       <WrapperWithTheme>
         <FormCars brands={brands} />
       </WrapperWithTheme>
@@ -50,7 +52,7 @@ describe("FormCars Component", () => {
   });
 
   it("renders brand autocomplete", () => {
-    renderWithProviders(
+    render(
       <WrapperWithTheme>
         <FormCars brands={brands} />
       </WrapperWithTheme>
@@ -60,7 +62,7 @@ describe("FormCars Component", () => {
   });
 
   it("renders model autocomplete", () => {
-    renderWithProviders(
+    render(
       <WrapperWithTheme>
         <FormCars brands={brands} />
       </WrapperWithTheme>
@@ -70,7 +72,7 @@ describe("FormCars Component", () => {
   });
 
   it("does not render year select initially", () => {
-    renderWithProviders(
+    render(
       <WrapperWithTheme>
         <FormCars brands={brands} />
       </WrapperWithTheme>
@@ -81,7 +83,7 @@ describe("FormCars Component", () => {
   });
 
   it("renders disabled checking price button", () => {
-    renderWithProviders(
+    render(
       <WrapperWithTheme>
         <FormCars brands={brands} />
       </WrapperWithTheme>
@@ -92,7 +94,7 @@ describe("FormCars Component", () => {
   });
 
   it("check click input brand autocomplete", async () => {
-    renderWithProviders(
+    render(
       <WrapperWithTheme>
         <FormCars brands={brands} />
       </WrapperWithTheme>

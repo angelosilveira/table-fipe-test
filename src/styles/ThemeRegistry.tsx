@@ -7,7 +7,7 @@ import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import CssBaseline from "@mui/material/CssBaseline";
 import React from "react";
 import { theme } from "./theme";
-import { StoreProvider } from "@/store/StoreProvider";
+import { CarsProvider } from "@/context/carsContext";
 
 export default function ThemeRegistry({
   children,
@@ -58,14 +58,14 @@ export default function ThemeRegistry({
 
   return (
     <CacheProvider value={cache}>
-      <StoreProvider>
+      <CarsProvider>
         <ThemeProvider theme={theme}>
           <StyledThemeProvider theme={theme}>
             <CssBaseline />
             {children}
           </StyledThemeProvider>
         </ThemeProvider>
-      </StoreProvider>
+      </CarsProvider>
     </CacheProvider>
   );
 }

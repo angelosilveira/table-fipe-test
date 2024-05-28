@@ -4,19 +4,18 @@ import React from "react";
 import Link from "next/link";
 
 import { Wrapper } from "@/components";
-import { RootState } from "@/store/store";
+import { useCars } from "@/context/carsContext";
 
 import * as S from "./styles";
-import { useAppSelector } from "@/hooks/useAppRedux";
 
 export default function Result() {
-  const car = useAppSelector((state: RootState) => state.cars.carFipe);
-  console.log("🚀 ~ Result ~ car:", car);
+  const { carFipe } = useCars();
+  console.log("🚀 ~ Result ~ car:", carFipe);
 
   return (
     <Wrapper sx={{ backgroundColor: (theme) => theme.bgColor.secondary }}>
       <S.Container>
-        {!car ? (
+        {!carFipe ? (
           <>
             <S.Title>
               Você não informou o veículo,{" "}
@@ -25,8 +24,8 @@ export default function Result() {
           </>
         ) : (
           <>
-            <S.Title>Tabela Fipe: Preço {car?.Modelo}</S.Title>
-            <S.Price>{car?.Valor}</S.Price>
+            <S.Title>Tabela Fipe: Preço {carFipe?.Modelo}</S.Title>
+            <S.Price>{carFipe?.Valor}</S.Price>
             <S.Label>Este é o preço de compra do veículo</S.Label>
           </>
         )}

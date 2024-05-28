@@ -11,19 +11,13 @@ import {
   TextField,
 } from "@mui/material";
 import { Wrapper } from "@/components";
-import { useSelector } from "react-redux";
 
 import * as S from "./styles";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FipeSchema } from "@/schemas/FipeSchema";
-import { RootState } from "@/store/store";
-import {
-  fetchCarsModels,
-  fetchFipe,
-  fetchYearsByModel,
-} from "@/store/cars/thunks";
-import { useAppDispatch } from "@/hooks/useAppRedux";
+
+import { useCars } from "@/context/carsContext";
 import { useRouter } from "next/navigation";
 
 type OptionProps = {
@@ -59,9 +53,13 @@ export const FormCars = ({ brands }: Props) => {
   const brandValue = watch("brand");
   const modelValue = watch("model");
 
-  const modelsList = useSelector((state: RootState) => state.cars.modelsList);
-  const yearsList = useSelector((state: RootState) => state.cars.years);
-  const dispatch = useAppDispatch();
+  const {
+    modelsList,
+    yearsList,
+    fetchModelsByBrand,
+    fetchYearsByModel,
+    fetchFipe,
+  } = useCars();
 
   const modelsListMemo = useMemo(() => {
     if (!modelsList.modelos) return [];
@@ -83,27 +81,23 @@ export const FormCars = ({ brands }: Props) => {
   }, [yearsList]);
 
   const handleChangeBrand = (code: string) => {
-    dispatch(fetchCarsModels(code));
+    fetchModelsByBrand(code);
   };
 
   const handleChangeModel = (code: string) => {
-    dispatch(
-      fetchYearsByModel({
-        brandCode: brandValue?.code,
-        modelCode: code,
-      })
-    );
+    fetchYearsByModel({
+      brandCode: brandValue?.code,
+      modelCode: code,
+    });
   };
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await dispatch(
-        fetchFipe({
-          brandCode: data.brand.code,
-          modelCode: data.model.code,
-          year: data.year,
-        })
-      );
+      fetchFipe({
+        brandCode: data.brand.code,
+        modelCode: data.model.code,
+        year: data.year,
+      });
       router.push("/result");
     } catch (error) {
       console.log(error);
