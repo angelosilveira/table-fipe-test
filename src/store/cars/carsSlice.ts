@@ -1,3 +1,5 @@
+"use client";
+
 import { Model } from "@/intefaces/Model";
 import { createSlice } from "@reduxjs/toolkit";
 import {
